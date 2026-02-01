@@ -4,4 +4,17 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>
+      com.hotel.reservation.presentation.servlet.UserServlet
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/user</url-pattern>
+  </servlet-mapping>
+
 </web-app>
