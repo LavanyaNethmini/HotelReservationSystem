@@ -10,5 +10,7 @@ public interface UserService {
 
     boolean isUsernameTaken(String username);
 
+    boolean login(String username, String password);
+
     List<String> getAllActiveUsers();
 }

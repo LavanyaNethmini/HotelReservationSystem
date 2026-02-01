@@ -13,5 +13,7 @@ public interface UserRepository {
 
     boolean existsByUsername(String username);
 
+    boolean validateLogin(String username, String password);
+
     List<String> findAllUsernames();
 }

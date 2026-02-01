@@ -41,4 +41,10 @@ public class UserServiceImpl implements UserService {
     public List<String> getAllActiveUsers() {
         return userRepository.findAllUsernames();
     }
+
+    @Override
+    public boolean login(String username, String password) {
+        return userRepository.validateLogin(username, password);
+    }
+
 }

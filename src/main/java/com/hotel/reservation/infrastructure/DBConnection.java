@@ -2,7 +2,6 @@ package com.hotel.reservation.infrastructure;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DBConnection {
 
@@ -12,18 +11,23 @@ public class DBConnection {
     private static final String URL =
             "jdbc:mysql://localhost:3308/ocen_view_resort_db";
     private static final String USER = "root";
-    private static final String PASSWORD = "123";
+    private static final String PASSWORD = "123"; // or your password
 
-    // Private constructor (Singleton)
     private DBConnection() {
         try {
+            // 🔴 THIS LINE IS THE KEY FIX
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
+
+            System.out.println("DB Connected from Tomcat");
+
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to connect to database", e);
         }
     }
 
-    // Singleton instance access
     public static DBConnection getInstance() {
         if (instance == null) {
             instance = new DBConnection();
@@ -31,7 +35,6 @@ public class DBConnection {
         return instance;
     }
 
-    // Expose connection
     public Connection getConnection() {
         return connection;
     }
