@@ -44,7 +44,7 @@
 <div class="dashboard-container">
     <div class="dashboard-card">
 
-        <h2>Make Reservation</h2>
+        <h2>Make Reservation & Billing</h2>
 
         <!-- ERROR MESSAGE -->
         <% if (request.getAttribute("error") != null) { %>
@@ -67,20 +67,17 @@
 
             <div class="input-group">
                 <label>Name</label>
-                <input type="text" id="name" name="name"
-                       placeholder="Guest name" required>
+                <input type="text" id="name" name="name" required>
             </div>
 
             <div class="input-group">
                 <label>Address</label>
-                <input type="text" id="address" name="address"
-                       placeholder="Guest address" required>
+                <input type="text" id="address" name="address" required>
             </div>
 
             <div class="input-group">
                 <label>Email</label>
-                <input type="email" id="email" name="email"
-                       placeholder="Guest email" required>
+                <input type="email" id="email" name="email" required>
             </div>
 
             <!-- ===== RESERVATION DETAILS ===== -->
@@ -88,8 +85,7 @@
 
             <div class="input-group">
                 <label>Room ID</label>
-                <input type="number" name="roomId"
-                       placeholder="Enter room ID" required>
+                <input type="number" name="roomId" required>
             </div>
 
             <div class="input-group">
@@ -102,12 +98,25 @@
                 <input type="date" name="checkOut" required>
             </div>
 
+            <!-- ===== BILLING DETAILS ===== -->
+            <h3>Billing Details</h3>
+
+            <div class="input-group">
+                <label>Payment Method</label>
+                <select name="paymentMethod" required>
+                    <option value="">Select Payment</option>
+                    <option value="CASH">Cash</option>
+                    <option value="CARD">Card</option>
+                </select>
+            </div>
+
             <br>
             <button class="btn" type="submit">
-                Confirm Reservation
+                Confirm Reservation & Generate Bill
             </button>
 
         </form>
+
     </div>
 </div>
 
