@@ -43,7 +43,12 @@
 
         <div class="menu">
             <div class="menu-item">User Management</div>
-            <div class="menu-item">Reservations</div>
+            <a href="${pageContext.request.contextPath}/reservation.jsp"
+               class="menu-item"
+               style="text-decoration:none; color:inherit;">
+                Reservations
+            </a>
+
             <div class="menu-item">Rooms</div>
             <div class="menu-item">Customers</div>
             <div class="menu-item">Reports</div>
