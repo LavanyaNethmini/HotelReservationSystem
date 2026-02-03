@@ -6,28 +6,26 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page session="true" %>
-<%
-    if (session.getAttribute("username") == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-%>
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard | Hotel Reservation</title>
+
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
+
 <body>
 
-<!-- NAVBAR -->
+<!-- ===== NAVBAR ===== -->
 <div class="navbar">
     <div class="logo">Hotel Reservation System</div>
 
     <div class="nav-right">
         <span class="username">
-            Welcome, <b><%= session.getAttribute("username") %></b>
+            Welcome,
+            <b><%= session.getAttribute("username") %></b>
+            (<%= session.getAttribute("role") %>)
         </span>
 
         <form action="${pageContext.request.contextPath}/logout" method="post">
@@ -36,24 +34,63 @@
     </div>
 </div>
 
-<!-- DASHBOARD CONTENT -->
+<!-- ===== DASHBOARD CONTENT ===== -->
 <div class="dashboard-container">
     <div class="dashboard-card">
+
         <h2>Dashboard</h2>
 
         <div class="menu">
-            <div class="menu-item">User Management</div>
+
+            <!-- ===== COMMON (ADMIN + STAFF) ===== -->
             <a href="${pageContext.request.contextPath}/reservation.jsp"
                class="menu-item"
                style="text-decoration:none; color:inherit;">
-                Reservations
+                Make Reservation
             </a>
 
-            <div class="menu-item">Rooms</div>
-            <div class="menu-item">Customers</div>
-            <div class="menu-item">Reports</div>
-            <div class="menu-item">Settings</div>
+            <a href="${pageContext.request.contextPath}/reservations"
+               class="menu-item"
+               style="text-decoration:none; color:inherit;">
+                Reservation List
+            </a>
+
+            <div class="menu-item">
+                Customers
+            </div>
+
+            <div class="menu-item">
+                Rooms
+            </div>
+
+            <a href="${pageContext.request.contextPath}/help.jsp"
+               class="menu-item"
+               style="text-decoration:none; color:inherit;">
+                Help Guide
+            </a>
+
+            <!-- ===== ADMIN ONLY ===== -->
+            <% if ("ADMIN".equals(session.getAttribute("role"))) { %>
+
+            <div class="menu-item">
+                User Management
+            </div>
+
+            <div class="menu-item">
+                Reports
+            </div>
+
+            <div class="menu-item">
+                System Settings
+            </div>
+
+            <% } %>
+
         </div>
+
+
+    </div>
+
     </div>
 </div>
 
