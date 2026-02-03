@@ -1,19 +1,14 @@
 package com.hotel.reservation.repository;
 
-import java.util.List;
+import com.hotel.reservation.domain.model.User;
 
 public interface UserRepository {
 
-    void save(String username,
-              String password,
-              String fullName,
-              String contactNo,
-              String address,
-              String role);
+    // LOGIN
+    User findByUsernameAndPassword(String username, String password);
+
+    // REGISTER
+    void save(User user);
 
     boolean existsByUsername(String username);
-
-    boolean validateLogin(String username, String password);
-
-    List<String> findAllUsernames();
 }

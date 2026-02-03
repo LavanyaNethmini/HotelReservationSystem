@@ -1,12 +1,10 @@
 package com.hotel.reservation.presentation.servlet;
 
+import com.hotel.reservation.domain.model.User;
 import com.hotel.reservation.service.UserService;
 import com.hotel.reservation.service.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -21,19 +19,20 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean isValid = userService.login(username, password);
+        User user = userService.login(username, password);
 
-        if (isValid) {
+        if (user != null) {
+
             HttpSession session = request.getSession();
-            session.setAttribute("username", username);
+            session.setAttribute("userId", user.getUserId());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("role", user.getRole());
 
-            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
-
+            response.sendRedirect("dashboard.jsp");
         } else {
             request.setAttribute("error", "Invalid username or password");
-            request.getRequestDispatcher("/login.jsp")
-                    .forward(request, response);
-
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
+
 }
