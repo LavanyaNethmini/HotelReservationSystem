@@ -6,6 +6,8 @@ import com.hotel.reservation.repository.*;
 import com.hotel.reservation.repository.impl.*;
 import com.hotel.reservation.service.ReservationService;
 
+import java.math.BigDecimal;
+
 public class ReservationServiceImpl implements ReservationService {
 
     private final GuestRepository guestRepo =
@@ -53,5 +55,13 @@ public class ReservationServiceImpl implements ReservationService {
 
         // ===== SAVE & RETURN ID =====
         return reservationRepo.save(finalReservation);
+    }
+
+    // =========================
+    // ROOM RATE FOR BILLING
+    // =========================
+    @Override
+    public BigDecimal getRoomRate(int roomId) {
+        return roomRepo.getRoomRate(roomId);
     }
 }

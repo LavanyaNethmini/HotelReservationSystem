@@ -71,7 +71,7 @@ public class ReservationServlet extends HttpServlet {
         int userId = (int) session.getAttribute("userId");
 
         try {
-            // ===== GUEST =====
+            /* ===== GUEST ===== */
             Guest guest = new Guest(
                     request.getParameter("name"),
                     request.getParameter("address"),
@@ -79,34 +79,41 @@ public class ReservationServlet extends HttpServlet {
                     request.getParameter("phone")
             );
 
-            // ===== RESERVATION =====
+            /* ===== RESERVATION ===== */
+            int roomId =
+                    Integer.parseInt(request.getParameter("roomId"));
+
             LocalDate checkIn =
                     LocalDate.parse(request.getParameter("checkIn"));
             LocalDate checkOut =
                     LocalDate.parse(request.getParameter("checkOut"));
 
-            Reservation reservation =
-                    new Reservation.Builder()
-                            .roomId(Integer.parseInt(request.getParameter("roomId")))
-                            .checkIn(checkIn)
-                            .checkOut(checkOut)
-                            .createdBy(userId)
-                            .build(); // date validation here
-
-            // Save reservation & guest
-            int reservationId =
-                    reservationService.makeReservation(guest, reservation);
-            // ⚠️ makeReservation must return reservationId (small change)
-
-            // ===== BILLING =====
-            String paymentMethod =
-                    request.getParameter("paymentMethod");
-
             long nights =
                     ChronoUnit.DAYS.between(checkIn, checkOut);
 
-            // Temporary room rate (later we’ll fetch from DB)
-            BigDecimal roomRate = new BigDecimal("5000.00");
+            if (nights <= 0) {
+                throw new IllegalStateException("Check-out date must be after check-in date");
+            }
+
+            Reservation reservation =
+                    new Reservation.Builder()
+                            .roomId(roomId)
+                            .checkIn(checkIn)
+                            .checkOut(checkOut)
+                            .createdBy(userId)
+                            .build();
+
+            /* ===== SAVE RESERVATION ===== */
+            int reservationId =
+                    reservationService.makeReservation(guest, reservation);
+
+            /* ===== BILLING ===== */
+            String paymentMethod =
+                    request.getParameter("paymentMethod");
+
+            // ✅ FETCH ROOM RATE FROM DB
+            BigDecimal roomRate =
+                    reservationService.getRoomRate(roomId);
 
             Bill bill =
                     new Bill.Builder()
@@ -119,19 +126,21 @@ public class ReservationServlet extends HttpServlet {
 
             billingService.generateBill(bill);
 
-            // Forward to printable bill
+            /* ===== SHOW BILL ===== */
             request.setAttribute("bill", bill);
             request.getRequestDispatcher("bill-print.jsp")
                     .forward(request, response);
 
         } catch (IllegalStateException e) {
 
+            // Validation errors (dates etc.)
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("reservation.jsp")
                     .forward(request, response);
 
         } catch (RuntimeException e) {
 
+            // Room / availability / DB errors
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("reservation.jsp")
                     .forward(request, response);
