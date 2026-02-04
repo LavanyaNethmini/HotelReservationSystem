@@ -62,6 +62,34 @@
     <url-pattern>/reservation</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>ReservationServlet</servlet-name>
+    <url-pattern>/reservation-form</url-pattern>
+  </servlet-mapping>
+
+
+  <filter>
+    <filter-name>AuthorizationFilter</filter-name>
+    <filter-class>
+      com.hotel.reservation.presentation.filter.AuthorizationFilter
+    </filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AuthorizationFilter</filter-name>
+    <url-pattern>/reservation</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>AuthorizationFilter</filter-name>
+    <url-pattern>/dashboard.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>AuthorizationFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+
 
 
 

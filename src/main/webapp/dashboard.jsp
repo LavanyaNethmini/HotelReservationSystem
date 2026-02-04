@@ -49,7 +49,7 @@
                 Make Reservation
             </a>
 
-            <a href="${pageContext.request.contextPath}/reservations"
+            <a href="${pageContext.request.contextPath}/reservation"
                class="menu-item"
                style="text-decoration:none; color:inherit;">
                 Reservation List

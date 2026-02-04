@@ -7,6 +7,7 @@ import com.hotel.reservation.repository.impl.*;
 import com.hotel.reservation.service.ReservationService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
 
@@ -64,4 +65,30 @@ public class ReservationServiceImpl implements ReservationService {
     public BigDecimal getRoomRate(int roomId) {
         return roomRepo.getRoomRate(roomId);
     }
+
+    @Override
+    public List<Reservation> getAll() {
+        return reservationRepo.findAll();
+    }
+
+    @Override
+    public List<Reservation> search(String keyword) {
+        return reservationRepo.search(keyword);
+    }
+
+    @Override
+    public List<Reservation> getMonthly(int year, int month) {
+        return reservationRepo.findByMonth(year, month);
+    }
+
+    @Override
+    public void cancelReservation(int id) {
+        reservationRepo.cancel(id);
+    }
+
+    @Override
+    public void updateReservation(Reservation r) {
+        reservationRepo.update(r);
+    }
+
 }

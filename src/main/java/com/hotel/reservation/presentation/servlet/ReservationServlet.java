@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class ReservationServlet extends HttpServlet {
 
@@ -30,32 +31,58 @@ public class ReservationServlet extends HttpServlet {
             new GuestRepositoryImpl();
 
     /* =========================
-       AJAX: FIND GUEST BY PHONE
+       GET: AJAX / LIST / SEARCH
        ========================= */
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse resp)
+            throws ServletException, IOException {
 
-        String phone = request.getParameter("phone");
-        if (phone == null) return;
+        /* ===== AJAX: FIND GUEST BY PHONE ===== */
+        String phone = req.getParameter("phone");
+        if (phone != null) {
+            Guest guest = guestRepository.findByPhone(phone);
 
-        Guest guest = guestRepository.findByPhone(phone);
-
-        if (guest != null) {
-            response.setContentType("application/json");
-            response.getWriter().write(
-                    "{"
-                            + "\"name\":\"" + guest.getName() + "\","
-                            + "\"address\":\"" + guest.getAddress() + "\","
-                            + "\"email\":\"" + guest.getEmail() + "\""
-                            + "}"
-            );
+            if (guest != null) {
+                resp.setContentType("application/json");
+                resp.getWriter().write(
+                        "{"
+                                + "\"name\":\"" + guest.getName() + "\","
+                                + "\"address\":\"" + guest.getAddress() + "\","
+                                + "\"email\":\"" + guest.getEmail() + "\""
+                                + "}"
+                );
+            }
+            return; // ⚠️ stop further processing
         }
+
+        /* ===== RESERVATION LIST / SEARCH ===== */
+        String search = req.getParameter("search");
+        String month = req.getParameter("month");
+
+        List<Reservation> list;
+
+        if (search != null && !search.isEmpty()) {
+            list = reservationService.search(search);
+
+        } else if (month != null && !month.isEmpty()) {
+            String[] parts = month.split("-");
+            list = reservationService.getMonthly(
+                    Integer.parseInt(parts[0]),
+                    Integer.parseInt(parts[1])
+            );
+
+        } else {
+            list = reservationService.getAll();
+        }
+
+        req.setAttribute("reservations", list);
+        req.getRequestDispatcher("reservation-list.jsp")
+                .forward(req, resp);
     }
 
     /* =========================
-       SAVE RESERVATION + BILL
+       POST: SAVE RESERVATION + BILL
        ========================= */
     @Override
     protected void doPost(HttpServletRequest request,
@@ -92,7 +119,8 @@ public class ReservationServlet extends HttpServlet {
                     ChronoUnit.DAYS.between(checkIn, checkOut);
 
             if (nights <= 0) {
-                throw new IllegalStateException("Check-out date must be after check-in date");
+                throw new IllegalStateException(
+                        "Check-out date must be after check-in date");
             }
 
             Reservation reservation =
@@ -108,10 +136,6 @@ public class ReservationServlet extends HttpServlet {
                     reservationService.makeReservation(guest, reservation);
 
             /* ===== BILLING ===== */
-            String paymentMethod =
-                    request.getParameter("paymentMethod");
-
-            // ✅ FETCH ROOM RATE FROM DB
             BigDecimal roomRate =
                     reservationService.getRoomRate(roomId);
 
@@ -120,27 +144,18 @@ public class ReservationServlet extends HttpServlet {
                             .reservationId(reservationId)
                             .nights((int) nights)
                             .roomRate(roomRate)
-                            .paymentMethod(paymentMethod)
+                            .paymentMethod(request.getParameter("paymentMethod"))
                             .createdBy(userId)
                             .build();
 
             billingService.generateBill(bill);
 
-            /* ===== SHOW BILL ===== */
             request.setAttribute("bill", bill);
             request.getRequestDispatcher("bill-print.jsp")
                     .forward(request, response);
 
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
 
-            // Validation errors (dates etc.)
-            request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reservation.jsp")
-                    .forward(request, response);
-
-        } catch (RuntimeException e) {
-
-            // Room / availability / DB errors
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("reservation.jsp")
                     .forward(request, response);
