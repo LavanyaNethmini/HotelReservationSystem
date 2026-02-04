@@ -3,67 +3,93 @@
 
 <html>
 <head>
-  <title>Reservations</title>
+  <title>Reservation List</title>
+  <link rel="stylesheet"
+        href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
+
 <body>
 
-<h2>Reservations</h2>
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <div class="logo">Hotel Reservation System</div>
+  <div class="nav-right">
+        <span class="username">
+            <%= session.getAttribute("username") %>
+        </span>
+    <form action="logout" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>
 
-<form method="get" action="reservation">
-  <input type="text" name="search"
-         placeholder="Search by name or phone">
+<!-- ===== CONTENT ===== -->
+<div class="dashboard-container">
+  <div class="dashboard-card">
 
-  <input type="month" name="month">
+    <h2>Reservations</h2>
 
-  <button type="submit">Filter</button>
-</form>
+    <!-- SEARCH / FILTER -->
+    <form method="get"
+          action="${pageContext.request.contextPath}/reservation"
+          class="filter-bar">
 
-<br>
+      <input type="text"
+             name="search"
+             placeholder="Search by guest name or phone">
 
-<table border="1" width="100%" cellpadding="8">
-  <tr>
-  <tr>
-    <th>ID</th>
-    <th>Guest Name</th>
-    <th>Phone</th>
-    <th>Room</th>
-    <th>Check In</th>
-    <th>Check Out</th>
-    <th>Status</th>
-    <th>Actions</th>
-  </tr>
+      <input type="month" name="month">
 
-  </tr>
+      <button type="submit" class="btn-small">
+        Filter
+      </button>
+    </form>
 
-  <c:choose>
-    <c:when test="${empty reservations}">
-      <tr>
-        <td colspan="6" align="center">
-          No reservations found
-        </td>
-      </tr>
-    </c:when>
-
-    <c:otherwise>
-      <c:forEach items="${reservations}" var="r">
+    <!-- TABLE -->
+    <div class="table-wrapper">
+      <table class="modern-table">
+        <thead>
         <tr>
-          <td>${r.reservationId}</td>
-          <td>${r.guestName}</td>
-          <td>${r.guestPhone}</td>
-          <td>${r.roomId}</td>
-          <td>${r.checkIn}</td>
-          <td>${r.checkOut}</td>
-          <td>${r.status}</td>
-          <td>
-            <a href="cancel-reservation?id=${r.reservationId}">
-              Cancel
-            </a>
-          </td>
+          <th>ID</th>
+          <th>Guest</th>
+          <th>Phone</th>
+          <th>Room</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Status</th>
+          <th>Action</th>
         </tr>
-      </c:forEach>
-    </c:otherwise>
-  </c:choose>
-</table>
+        </thead>
+
+        <tbody>
+        <c:forEach items="${reservations}" var="r">
+          <tr>
+            <td>${r.reservationId}</td>
+            <td>${r.guestName}</td>
+            <td>${r.guestPhone}</td>
+            <td>${r.roomId}</td>
+            <td>${r.checkIn}</td>
+            <td>${r.checkOut}</td>
+            <td>
+                    <span class="status ${r.status}">
+                        ${r.status}
+                    </span>
+            </td>
+            <td>
+              <a class="cancel-btn"
+                 href="cancel-reservation?id=${r.reservationId}">
+                Cancel
+              </a>
+            </td>
+          </tr>
+        </c:forEach>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
 
 </body>
 </html>

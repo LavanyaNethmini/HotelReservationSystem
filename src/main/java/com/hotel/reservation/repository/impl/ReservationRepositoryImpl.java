@@ -59,8 +59,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                         "    r.check_out,\n" +
                         "    r.status,\n" +
                         "    r.created_by,\n" +
-                        "    g.name AS guest_name,\n" +
-                        "    g.phone AS guest_phone\n" +
+                        "    g.name AS name,\n" +
+                        "    g.phone AS phone\n" +
                         "FROM reservations r\n" +
                         "JOIN guests g ON r.guest_id = g.guest_id\n" +
                         "ORDER BY r.check_in DESC\n";
@@ -207,8 +207,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
                 rs.getDate("check_out").toLocalDate(),
                 rs.getString("status"),
                 rs.getInt("created_by"),
-                rs.getString("guest_name"),
-                rs.getString("guest_phone")
+                rs.getString("name"),
+                rs.getString("phone")
         );
     }
 

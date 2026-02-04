@@ -10,10 +10,8 @@
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #1e3c72, #2a5298);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
+
 
 /* Card */
 .card {
@@ -187,4 +185,120 @@ body {
     background: #e1e7ed;
     transform: translateY(-3px);
 }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filter-bar input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.btn-small {
+    background: #1e3c72;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-small:hover {
+    background: #16315c;
+}
+
+/* ===== TABLE ===== */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.modern-table thead {
+    background: #f4f6f8;
+}
+
+.modern-table th,
+.modern-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modern-table tr:hover {
+    background: #f9fbfd;
+}
+
+/* ===== STATUS ===== */
+.status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status.CONFIRMED {
+    background: #d4f8e8;
+    color: #1b7f5a;
+}
+
+.status.CREATED {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status.CANCELLED {
+    background: #f8d7da;
+    color: #842029;
+}
+
+/* ===== ACTION BUTTON ===== */
+.cancel-btn {
+    color: #d63031;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cancel-btn:hover {
+    text-decoration: underline;
+}
+
+/* ===== NO DATA ===== */
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+.modern-table {
+    table-layout: fixed;
+}
+
+.modern-table td,
+.modern-table th {
+    white-space: nowrap;
+}
+
+.modern-table th:nth-child(2),
+.modern-table td:nth-child(2) {
+    width: 180px; /* Guest name */
+}
+
+.modern-table th:nth-child(3),
+.modern-table td:nth-child(3) {
+    width: 140px; /* Phone */
+}
+
+
 
