@@ -447,5 +447,62 @@ body {
     font-weight: 600;
 }
 
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #555;
+}
 
+.breadcrumb a {
+    color: #1e3c72;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb .active {
+    font-weight: 600;
+    color: #333;
+}
+
+.breadcrumb .separator {
+    margin: 0 6px;
+    color: #999;
+}
+
+
+
+/* ===== PAGE SUBTITLE ===== */
+.page-subtitle {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+/* ===== EDIT BUTTON ===== */
+.edit-btn {
+    background: #1e3c72;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.edit-btn:hover {
+    background: #16315c;
+}
+
+/* ===== EMPTY DATA ===== */
+.no-data {
+    text-align: center;
+    padding: 25px;
+    color: #888;
+    font-style: italic;
+}
 
