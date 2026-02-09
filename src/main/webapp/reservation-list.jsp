@@ -82,6 +82,13 @@
               </a>
             </td>
           </tr>
+          <c:if test="${not empty sessionScope.success}">
+            <div class="success-msg">
+                ${sessionScope.success}
+            </div>
+            <c:remove var="success" scope="session"/>
+          </c:if>
+
         </c:forEach>
         </tbody>
       </table>
