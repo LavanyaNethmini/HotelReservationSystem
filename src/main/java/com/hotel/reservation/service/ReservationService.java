@@ -18,7 +18,7 @@ public interface ReservationService {
 
     List<Reservation> getMonthly(int year, int month);
 
-    void cancelReservation(int id);
+    void cancelReservation(int reservationId);
 
     void updateReservation(Reservation r);
 }
