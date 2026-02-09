@@ -18,5 +18,8 @@ public interface ReservationRepository {
     void cancel(int reservationId);
 
     void update(Reservation reservation);
+
+    void updateStatus(int reservationId, String status);
+
 }
 
