@@ -91,7 +91,29 @@
   </filter-mapping>
 
 
+  <servlet>
+    <servlet-name>HelpServlet</servlet-name>
+    <servlet-class>
+      com.hotel.reservation.presentation.servlet.HelpServlet
+    </servlet-class>
+  </servlet>
 
+  <servlet-mapping>
+    <servlet-name>HelpServlet</servlet-name>
+    <url-pattern>/help</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CancelReservationServlet</servlet-name>
+    <servlet-class>
+      com.hotel.reservation.presentation.servlet.CancelReservationServlet
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CancelReservationServlet</servlet-name>
+    <url-pattern>/cancel-reservation</url-pattern>
+  </servlet-mapping>
 
 
 </web-app>
