@@ -115,5 +115,17 @@
     <url-pattern>/cancel-reservation</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>GuestServlet</servlet-name>
+    <servlet-class>
+      com.hotel.reservation.presentation.servlet.GuestServlet
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>GuestServlet</servlet-name>
+    <url-pattern>/guests</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>
