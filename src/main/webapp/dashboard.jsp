@@ -63,11 +63,12 @@
                 Rooms
             </div>
 
-            <a href="${pageContext.request.contextPath}/help.jsp"
+            <a href="${pageContext.request.contextPath}/help"
                class="menu-item"
-               style="text-decoration:none; color:inherit;">
+               style="text-decoration:none;color:inherit;">
                 Help Guide
             </a>
+
 
             <!-- ===== ADMIN ONLY ===== -->
             <% if ("ADMIN".equals(session.getAttribute("role"))) { %>

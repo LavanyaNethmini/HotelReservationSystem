@@ -212,4 +212,23 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         );
     }
 
+    @Override
+    public void updateStatus(int reservationId, String status) {
+
+        String sql =
+                "UPDATE reservations SET status = ? WHERE reservation_id = ?";
+
+        try (PreparedStatement ps =
+                     connection.prepareStatement(sql)) {
+
+            ps.setString(1, status);
+            ps.setInt(2, reservationId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to cancel reservation", e);
+        }
+    }
+
+
 }

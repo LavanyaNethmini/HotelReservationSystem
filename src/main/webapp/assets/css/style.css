@@ -300,5 +300,142 @@ body {
     width: 140px; /* Phone */
 }
 
+/* ===== HELP PAGE ===== */
+.help-card {
+    max-width: 850px;
+}
+
+.help-intro {
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 15px;
+}
+
+/* Help Content Box */
+.help-content {
+    background: #f9fbfd;
+    border-left: 5px solid #1e3c72;
+    padding: 20px 25px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/* Help List */
+.help-content h3 {
+    margin-bottom: 12px;
+    color: #1e3c72;
+}
+
+.help-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.help-content li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+/* Icon before each step */
+.help-content li::before {
+    content: "✔";
+    color: #1e3c72;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Footer */
+.help-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+}
+
+/* ===== ACCORDION ===== */
+.accordion {
+    margin-top: 20px;
+}
+
+.accordion-item {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.accordion-header {
+    width: 100%;
+    background: #1e3c72;
+    color: #fff;
+    padding: 14px 18px;
+    text-align: left;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header::after {
+    content: "+";
+    font-size: 18px;
+}
+
+.accordion-header.active::after {
+    content: "−";
+}
+
+.accordion-body {
+    display: none;
+    background: #f9fbfd;
+    padding: 15px 20px;
+}
+
+.accordion-body ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.accordion-body li {
+    padding: 8px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.accordion-body li:last-child {
+    border-bottom: none;
+}
+
+
+.accordion-header {
+    width: 100%;
+    background: #1e3c72;
+    color: white;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-body {
+    display: none;
+    padding: 15px 20px;
+    background: #f9fbfd;
+    border-radius: 0 0 8px 8px;
+}
+
+.help-list li {
+    padding: 6px 0;
+}
+
 
 
