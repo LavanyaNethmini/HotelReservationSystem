@@ -82,8 +82,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void cancelReservation(int id) {
-        reservationRepo.cancel(id);
+    public void cancelReservation(int reservationId) {
+        reservationRepo.updateStatus(reservationId, "CANCELLED");
     }
 
     @Override
