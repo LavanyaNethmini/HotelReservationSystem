@@ -2,8 +2,13 @@ package com.hotel.reservation.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface RoomRepository {
+
+    List<Room> findAll();
+
+    List<Integer> findBookedRoomIds(LocalDate checkIn, LocalDate checkOut);
 
     boolean roomExists(int roomId);
 
