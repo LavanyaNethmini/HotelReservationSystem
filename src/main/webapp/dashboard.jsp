@@ -37,6 +37,8 @@
 <!-- ===== DASHBOARD CONTENT ===== -->
 <div class="dashboard-container">
     <div class="dashboard-card">
+        <jsp:include page="WEB-INF/jsp/common/breadcrumb.jsp" />
+
 
         <h2>Dashboard</h2>
 
@@ -55,13 +57,19 @@
                 Reservation List
             </a>
 
-            <div class="menu-item">
-                Customers
-            </div>
+            <a href="${pageContext.request.contextPath}/guests"
+               class="menu-item"
+               style="text-decoration:none; color:inherit;">
+                Guests
+            </a>
 
-            <div class="menu-item">
+
+            <a href="${pageContext.request.contextPath}/rooms"
+               class="menu-item"
+               style="text-decoration:none; color:inherit;">
                 Rooms
-            </div>
+            </a>
+
 
             <a href="${pageContext.request.contextPath}/help"
                class="menu-item"

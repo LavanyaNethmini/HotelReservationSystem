@@ -27,7 +27,16 @@ public class RoomServiceImpl implements RoomService {
 
         for (Room r : rooms) {
             boolean available = !bookedRoomIds.contains(r.getRoomId());
-            result.add(new RoomAvailabilityDTO(r, available));
+
+            result.add(
+                    new RoomAvailabilityDTO(
+                            r.getRoomId(),
+                            r.getRoomNumber(),
+                            r.getRoomType(),
+                            r.getPrice(),
+                            available
+                    )
+            );
         }
 
         return result;

@@ -506,3 +506,38 @@ body {
     font-style: italic;
 }
 
+/* ===== ROOM STATUS ===== */
+.status.AVAILABLE {
+    background: #d4f8e8;
+    color: #1b7f5a;
+}
+
+.status.NOT_AVAILABLE {
+    background: #f8d7da;
+    color: #842029;
+}
+
+/* ===== DISABLED BUTTON ===== */
+.btn-disabled {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    font-weight: 600;
+}
+
+/* ===== FILTER BAR ALIGNMENT ===== */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filter-bar input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+

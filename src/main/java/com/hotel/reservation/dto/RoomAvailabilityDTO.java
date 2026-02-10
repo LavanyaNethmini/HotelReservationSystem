@@ -1,22 +1,32 @@
 package com.hotel.reservation.dto;
 
-import com.hotel.reservation.domain.model.Room;
+import java.math.BigDecimal;
 
 public class RoomAvailabilityDTO {
 
-    private Room room;
+    private int roomId;
+    private String roomNumber;
+    private String roomType;
+    private BigDecimal price;
     private boolean available;
 
-    public RoomAvailabilityDTO(Room room, boolean available) {
-        this.room = room;
+    public RoomAvailabilityDTO(
+            int roomId,
+            String roomNumber,
+            String roomType,
+            BigDecimal price,
+            boolean available
+    ) {
+        this.roomId = roomId;
+        this.roomNumber = roomNumber;
+        this.roomType = roomType;
+        this.price = price;
         this.available = available;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
+    public int getRoomId() { return roomId; }
+    public String getRoomNumber() { return roomNumber; }
+    public String getRoomType() { return roomType; }
+    public BigDecimal getPrice() { return price; }
+    public boolean isAvailable() { return available; }
 }
