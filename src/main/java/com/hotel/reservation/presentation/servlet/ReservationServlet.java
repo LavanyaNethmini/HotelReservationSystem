@@ -79,6 +79,20 @@ public class ReservationServlet extends HttpServlet {
         req.setAttribute("reservations", list);
         req.getRequestDispatcher("reservation-list.jsp")
                 .forward(req, resp);
+
+        /* ===== BREADCRUMB ===== */
+        req.setAttribute("breadcrumbs",
+                new String[]{"Reservations", "Reservation List"});
+
+        req.setAttribute("breadcrumbLinks",
+                new String[]{
+                        req.getContextPath() + "/reservation",
+                        null
+                });
+
+        req.getRequestDispatcher("reservation-list.jsp")
+                .forward(req, resp);
+
     }
 
     /* =========================
@@ -160,5 +174,21 @@ public class ReservationServlet extends HttpServlet {
             request.getRequestDispatcher("reservation.jsp")
                     .forward(request, response);
         }
+
+        /* ===== BREADCRUMB (IMPORTANT) ===== */
+        request.setAttribute("breadcrumbs",
+                new String[]{"Dashboard", "Reservation List"});
+
+        request.setAttribute("breadcrumbLinks",
+                new String[]{
+                        request.getContextPath() + "/dashboard",
+                        null // current page
+                });
+
+        /* ===== FORWARD (LAST LINE ONLY) ===== */
+        request.getRequestDispatcher("reservation-list.jsp")
+                .forward(request, response);
+
+
     }
 }
