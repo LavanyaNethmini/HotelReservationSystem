@@ -7,6 +7,9 @@ import com.hotel.reservation.repository.UserRepository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
@@ -97,4 +100,140 @@ public class UserRepositoryImpl implements UserRepository {
             throw new RuntimeException("Login failed", e);
         }
     }
+
+    @Override
+    public List<User> findAll() {
+
+        List<User> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM users ORDER BY username";
+
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(mapUser(rs));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+
+    @Override
+    public void delete(int id) {
+
+        String sql = "DELETE FROM users WHERE user_id=?";
+
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void resetPassword(int id, String newPassword) {
+
+        String sql = "UPDATE users SET password=? WHERE user_id=?";
+
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, newPassword);
+            ps.setInt(2, id);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User mapUser(ResultSet rs) throws SQLException {
+
+        return User.builder()
+                .userId(rs.getInt("user_id"))
+                .username(rs.getString("username"))
+                .password(rs.getString("password"))
+                .fullName(rs.getString("full_name"))
+                .contactNo(rs.getString("contact_no"))
+                .address(rs.getString("address"))
+                .role(rs.getString("role"))
+                .status(rs.getString("status"))
+                .isActive(rs.getBoolean("is_active"))
+                .build();
+    }
+
+
+    @Override
+    public User findById(int id) {
+
+        String sql = "SELECT * FROM users WHERE user_id=?";
+
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return User.builder()
+                        .userId(rs.getInt("user_id"))
+                        .username(rs.getString("username"))
+                        .password(rs.getString("password"))
+                        .fullName(rs.getString("full_name"))
+                        .contactNo(rs.getString("contact_no"))
+                        .address(rs.getString("address"))
+                        .role(rs.getString("role"))
+                        .status(rs.getString("status"))
+                        .isActive(rs.getBoolean("is_active"))
+                        .build();
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    @Override
+    public void update(User user) {
+
+        String sql = "UPDATE users SET " +
+                "username=?, password=?, full_name=?, contact_no=?, " +
+                "address=?, role=?, status=?, is_active=? " +
+                "WHERE user_id=?";
+
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFullName());
+            ps.setString(4, user.getContactNo());
+            ps.setString(5, user.getAddress());
+            ps.setString(6, user.getRole());
+            ps.setString(7, user.getStatus());
+            ps.setBoolean(8, user.isActive());
+            ps.setInt(9, user.getUserId());
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

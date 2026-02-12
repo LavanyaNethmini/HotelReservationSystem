@@ -5,6 +5,8 @@ import com.hotel.reservation.repository.UserRepository;
 import com.hotel.reservation.repository.impl.UserRepositoryImpl;
 import com.hotel.reservation.service.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -40,5 +42,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUsernameTaken(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.delete(id);
+    }
+
+    @Override
+    public void resetPassword(int id, String password) {
+        userRepository.resetPassword(id, password);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userRepository.update(user);
     }
 }

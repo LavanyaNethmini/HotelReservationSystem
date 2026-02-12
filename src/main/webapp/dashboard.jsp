@@ -81,9 +81,12 @@
             <!-- ===== ADMIN ONLY ===== -->
             <% if ("ADMIN".equals(session.getAttribute("role"))) { %>
 
-            <div class="menu-item">
+            <a href="${pageContext.request.contextPath}/users"
+               class="menu-item"
+               style="text-decoration:none;color:inherit;">
                 User Management
-            </div>
+            </a>
+
 
             <div class="menu-item">
                 Reports
