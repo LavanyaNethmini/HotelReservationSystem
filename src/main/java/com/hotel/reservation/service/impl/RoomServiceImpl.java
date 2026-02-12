@@ -41,4 +41,10 @@ public class RoomServiceImpl implements RoomService {
 
         return result;
     }
+
+    @Override
+    public void saveRoom(String number, String type, double price) {
+        roomRepository.save(number, type, price);
+    }
+
 }

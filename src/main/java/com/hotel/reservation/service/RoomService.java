@@ -8,4 +8,7 @@ import java.util.List;
 public interface RoomService {
     List<RoomAvailabilityDTO> getRoomsWithAvailability(
             LocalDate checkIn, LocalDate checkOut);
+
+    void saveRoom(String number, String type, double price_per_night);
+
 }

@@ -1,5 +1,6 @@
 package com.hotel.reservation.repository.impl;
 
+import com.hotel.reservation.domain.model.Room;
 import com.hotel.reservation.infrastructure.DBConnection;
 import com.hotel.reservation.repository.RoomRepository;
 
@@ -85,7 +86,8 @@ public class RoomRepositoryImpl implements RoomRepository {
                         rs.getInt("room_id"),
                         rs.getString("room_number"),
                         rs.getString("room_type"),
-                        rs.getDouble("price")
+                        rs.getBigDecimal("price_per_night"),
+                        rs.getBoolean("availability")
                 ));
             }
         } catch (Exception e) {
@@ -123,4 +125,23 @@ public class RoomRepositoryImpl implements RoomRepository {
 
         return list;
     }
+
+    @Override
+    public void save(String number, String type, double price) {
+
+        String sql = "INSERT INTO rooms (room_number, room_type, price_per_night) VALUES (?, ?, ?)";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, number);
+            ps.setString(2, type);
+            ps.setDouble(3, price);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
