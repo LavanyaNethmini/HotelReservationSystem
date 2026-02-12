@@ -24,6 +24,16 @@
 
         <h2>Rooms</h2>
 
+        <c:if test="${sessionScope.role == 'ADMIN'}">
+            <div style="margin-bottom: 15px;">
+                <a href="${pageContext.request.contextPath}/room-add"
+                   class="btn-small">
+                    + Add Room
+                </a>
+            </div>
+        </c:if>
+
+
         <!-- ===== FILTER BAR ===== -->
         <form method="get"
               action="${pageContext.request.contextPath}/rooms"
