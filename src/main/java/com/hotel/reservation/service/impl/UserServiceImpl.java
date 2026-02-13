@@ -50,9 +50,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) {
-        userRepository.delete(id);
+    public void delete(int userId) {
+        userRepository.delete(userId);
     }
+
 
     @Override
     public void resetPassword(int id, String password) {

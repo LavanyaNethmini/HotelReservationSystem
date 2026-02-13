@@ -20,7 +20,7 @@ public interface UserRepository {
 
     void update(User user);
 
-    void delete(int id);
+    void delete(int userId);
 
     void resetPassword(int id, String newPassword);
 }

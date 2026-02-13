@@ -13,7 +13,8 @@ public interface UserService {
     boolean isUsernameTaken(String username);
 
     List<User> getAllUsers();
-    void deleteUser(int id);
+    void delete(int userId);
+
     void resetPassword(int id, String password);
     void saveUser(User user);
     void updateUser(User user);

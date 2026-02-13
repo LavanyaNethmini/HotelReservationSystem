@@ -123,19 +123,20 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int userId) {
 
-        String sql = "DELETE FROM users WHERE user_id=?";
+        String sql = "DELETE FROM users WHERE user_id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
+            ps.setInt(1, userId);
             ps.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error deleting user", e);
         }
     }
+
 
     @Override
     public void resetPassword(int id, String newPassword) {
