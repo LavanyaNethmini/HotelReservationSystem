@@ -541,3 +541,68 @@ body {
     border: 1px solid #ccc;
 }
 
+/* ===== SUCCESS MESSAGE ===== */
+.success-msg {
+    background: #d4f8e8;
+    color: #1b7f5a;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* ===== ACTION LINKS ===== */
+.action-link {
+    margin-right: 10px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.action-link.edit {
+    color: #1e3c72;
+}
+
+.action-link.delete {
+    color: #d63031;
+}
+
+.action-link.reset {
+    color: #856404;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #1e3c72;
+}
+
+.breadcrumb .active {
+    font-weight: 600;
+    color: #333;
+}
+
+.separator {
+    margin: 0 6px;
+    color: #888;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-grid button {
+    grid-column: span 2;
+}
+
+

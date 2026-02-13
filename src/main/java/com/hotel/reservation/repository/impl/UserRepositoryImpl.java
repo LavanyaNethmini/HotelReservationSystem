@@ -108,8 +108,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         String sql = "SELECT * FROM users ORDER BY username";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -128,8 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         String sql = "DELETE FROM users WHERE user_id=?";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -144,8 +142,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         String sql = "UPDATE users SET password=? WHERE user_id=?";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, newPassword);
             ps.setInt(2, id);
@@ -215,8 +212,7 @@ public class UserRepositoryImpl implements UserRepository {
                 "address=?, role=?, status=?, is_active=? " +
                 "WHERE user_id=?";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
