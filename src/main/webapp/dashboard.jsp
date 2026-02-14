@@ -88,9 +88,12 @@
             </a>
 
 
-            <div class="menu-item">
+            <a href="${pageContext.request.contextPath}/reports"
+               class="menu-item"
+               style="text-decoration:none;color:inherit;">
                 Reports
-            </div>
+            </a>
+
 
             <div class="menu-item">
                 System Settings

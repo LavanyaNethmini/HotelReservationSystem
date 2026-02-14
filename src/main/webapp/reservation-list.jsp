@@ -3,7 +3,7 @@
 
 <html>
 <head>
-  <title>Reservation List</title>
+  <title>Reservations</title>
   <link rel="stylesheet"
         href="${pageContext.request.contextPath}/assets/css/style.css">
 </head>
@@ -27,9 +27,40 @@
 <div class="dashboard-container">
   <div class="dashboard-card">
 
-    <h2>Reservations</h2>
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+      <h2>Reservations</h2>
 
-    <!-- SEARCH / FILTER -->
+      <!-- BREADCRUMB -->
+      <c:if test="${not empty breadcrumbs}">
+        <nav class="breadcrumb">
+          <c:forEach var="b" items="${breadcrumbs}" varStatus="loop">
+            <c:choose>
+              <c:when test="${breadcrumbLinks[loop.index] != null}">
+                <a href="${breadcrumbLinks[loop.index]}">${b}</a>
+              </c:when>
+              <c:otherwise>
+                <span class="active">${b}</span>
+              </c:otherwise>
+            </c:choose>
+
+            <c:if test="${!loop.last}">
+              <span class="separator">›</span>
+            </c:if>
+          </c:forEach>
+        </nav>
+      </c:if>
+    </div>
+
+    <!-- ===== SUCCESS MESSAGE ===== -->
+    <c:if test="${not empty sessionScope.success}">
+      <div class="success-msg">
+          ${sessionScope.success}
+      </div>
+      <c:remove var="success" scope="session"/>
+    </c:if>
+
+    <!-- ===== FILTER BAR ===== -->
     <form method="get"
           action="${pageContext.request.contextPath}/reservation"
           class="filter-bar">
@@ -45,7 +76,7 @@
       </button>
     </form>
 
-    <!-- TABLE -->
+    <!-- ===== TABLE ===== -->
     <div class="table-wrapper">
       <table class="modern-table">
         <thead>
@@ -71,28 +102,30 @@
             <td>${r.checkIn}</td>
             <td>${r.checkOut}</td>
             <td>
-                    <span class="status ${r.status}">
-                        ${r.status}
-                    </span>
+                            <span class="status ${r.status}">
+                                ${r.status}
+                            </span>
             </td>
             <td>
-              <a class="cancel-btn"
-                 href="cancel-reservation?id=${r.reservationId}">
+              <a class="cancel-btn danger"
+                 href="cancel-reservation?id=${r.reservationId}"
+                 onclick="return confirm('Cancel this reservation?');">
                 Cancel
               </a>
             </td>
           </tr>
-          <c:if test="${not empty sessionScope.success}">
-            <div class="success-msg">
-                ${sessionScope.success}
-            </div>
-            <c:remove var="success" scope="session"/>
-          </c:if>
-
         </c:forEach>
+
+        <c:if test="${empty reservations}">
+          <tr>
+            <td colspan="8" class="no-data">
+              No reservations found
+            </td>
+          </tr>
+        </c:if>
+
         </tbody>
       </table>
-
     </div>
 
   </div>
