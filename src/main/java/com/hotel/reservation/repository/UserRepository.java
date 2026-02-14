@@ -22,5 +22,7 @@ public interface UserRepository {
 
     void delete(int userId);
 
-    void resetPassword(int id, String newPassword);
+    void resetPassword(int userId, String newPassword);
+
+
 }

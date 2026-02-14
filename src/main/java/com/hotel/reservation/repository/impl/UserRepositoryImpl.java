@@ -139,21 +139,22 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public void resetPassword(int id, String newPassword) {
+    public void resetPassword(int userId, String newPassword) {
 
         String sql = "UPDATE users SET password=? WHERE user_id=?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setString(1, newPassword);
-            ps.setInt(2, id);
+            ps.setInt(2, userId);
 
             ps.executeUpdate();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error resetting password", e);
         }
     }
+
 
     private User mapUser(ResultSet rs) throws SQLException {
 

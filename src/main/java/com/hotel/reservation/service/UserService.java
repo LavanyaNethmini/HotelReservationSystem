@@ -15,7 +15,8 @@ public interface UserService {
     List<User> getAllUsers();
     void delete(int userId);
 
-    void resetPassword(int id, String password);
+    void resetPassword(int userId, String newPassword);
+
     void saveUser(User user);
     void updateUser(User user);
     void save(User user);

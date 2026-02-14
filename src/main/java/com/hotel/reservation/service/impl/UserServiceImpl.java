@@ -56,9 +56,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void resetPassword(int id, String password) {
-        userRepository.resetPassword(id, password);
+    public void resetPassword(int userId, String newPassword) {
+        userRepository.resetPassword(userId, newPassword);
     }
+
 
     @Override
     public void saveUser(User user) {
