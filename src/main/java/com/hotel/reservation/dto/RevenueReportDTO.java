@@ -19,5 +19,5 @@ public class RevenueReportDTO {
     public BigDecimal getTotalRevenue() {
         return totalRevenue;
     }
-
 }
+

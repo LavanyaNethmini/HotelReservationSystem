@@ -58,34 +58,36 @@ public class ReportRepositoryImpl implements ReportRepository {
 
         String sql =
                 "SELECT MONTH(r.check_in) AS month, " +
-                        "SUM(b.total_amount) AS total " +
+                        "       SUM(b.total_amount) AS total_revenue " +
                         "FROM bills b " +
                         "JOIN reservations r ON b.reservation_id = r.reservation_id " +
-                        "WHERE YEAR(r.check_in) = ? " +
+                        "WHERE r.status = 'CONFIRMED' " +
+                        "AND YEAR(r.check_in) = ? " +
                         "GROUP BY MONTH(r.check_in) " +
                         "ORDER BY month";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, year);
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(
-                        new RevenueReportDTO(
-                                rs.getInt("month"),
-                                rs.getBigDecimal("total")
-                        )
-                );
+
+                int month = rs.getInt("month");
+                BigDecimal total = rs.getBigDecimal("total_revenue");
+
+                list.add(new RevenueReportDTO(month, total));
             }
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error fetching monthly revenue", e);
         }
 
         return list;
     }
+
 
 
     /* =========================

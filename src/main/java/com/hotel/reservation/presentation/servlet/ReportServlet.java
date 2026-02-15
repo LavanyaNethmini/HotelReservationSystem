@@ -55,17 +55,39 @@ public class ReportServlet extends HttpServlet {
     }
 
     private void handleRevenue(HttpServletRequest req) {
-        String start = req.getParameter("start");
-        String end = req.getParameter("end");
 
-        if (start != null && end != null) {
+        String yearStr = req.getParameter("year");
+        String startStr = req.getParameter("start");
+        String endStr = req.getParameter("end");
+
+        // ===== Monthly Revenue by Year =====
+        if (yearStr != null && !yearStr.isEmpty()) {
+
+            int year = Integer.parseInt(yearStr);
+
+            req.setAttribute("monthlyRevenue",
+                    reportService.getMonthlyRevenue(year));
+
+            req.setAttribute("selectedYear", year);
+        }
+
+        // ===== Total Revenue by Date Range =====
+        if (startStr != null && endStr != null
+                && !startStr.isEmpty()
+                && !endStr.isEmpty()) {
+
             req.setAttribute("totalRevenue",
                     reportService.getTotalRevenue(
-                            LocalDate.parse(start),
-                            LocalDate.parse(end)
+                            LocalDate.parse(startStr),
+                            LocalDate.parse(endStr)
                     ));
+
+            req.setAttribute("startDate", startStr);
+            req.setAttribute("endDate", endStr);
         }
     }
+
+
 
     private void handleReservation(HttpServletRequest req) {
         String start = req.getParameter("start");

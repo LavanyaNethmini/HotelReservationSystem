@@ -38,13 +38,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<RevenueReportDTO> getMonthlyRevenue(int year) {
-
-        if (year <= 0) {
-            throw new IllegalArgumentException("Invalid year");
-        }
-
         return reportRepository.getMonthlyRevenue(year);
     }
+
 
 
     /* =========================
