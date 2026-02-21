@@ -2,14 +2,18 @@ package com.hotel.reservation.service.impl;
 
 import com.hotel.reservation.domain.model.Guest;
 import com.hotel.reservation.domain.model.Reservation;
+import com.hotel.reservation.notification.EmailNotificationObserver;
+import com.hotel.reservation.notification.EventObserver;
+import com.hotel.reservation.notification.EventPublisher;
 import com.hotel.reservation.repository.*;
 import com.hotel.reservation.repository.impl.*;
 import com.hotel.reservation.service.ReservationService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationServiceImpl implements ReservationService {
+public class ReservationServiceImpl implements ReservationService, EventPublisher {
 
     private final GuestRepository guestRepo =
             new GuestRepositoryImpl();
@@ -19,6 +23,15 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepo =
             new ReservationRepositoryImpl();
+
+    private final List<EventObserver> observers =
+            new ArrayList<>();
+
+    public ReservationServiceImpl() {
+        registerObserver(new EmailNotificationObserver());
+    }
+
+
 
     @Override
     public int makeReservation(Guest guest, Reservation reservation) {
@@ -54,9 +67,14 @@ public class ReservationServiceImpl implements ReservationService {
                         .createdBy(reservation.getCreatedBy())
                         .build();
 
-        // ===== SAVE & RETURN ID =====
-        return reservationRepo.save(finalReservation);
+        // ===== SAVE & NOTIFY =====
+        int reservationId = reservationRepo.save(finalReservation);
+
+        notifyObservers("RESERVATION_CREATED", finalReservation);
+
+        return reservationId;
     }
+
 
     // =========================
     // ROOM RATE FOR BILLING
@@ -84,6 +102,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void cancelReservation(int reservationId) {
         reservationRepo.updateStatus(reservationId, "CANCELLED");
+        Reservation reservation = reservationRepo.findById(reservationId);
+
+        reservationRepo.cancel(reservationId);
+
+        notifyObservers("RESERVATION_CANCELLED", reservation);
     }
 
     @Override
@@ -91,4 +114,27 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepo.update(r);
     }
 
-}
+    @Override
+    public void registerObserver(EventObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(EventObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String eventType, Object data) {
+        for (EventObserver observer : observers) {
+            observer.update(eventType, data);
+        }
+    }
+
+
+    }
+
+
+
+
+
