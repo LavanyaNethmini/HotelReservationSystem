@@ -1,3 +1,4 @@
+import com.hotel.reservation.repository.BillRepository;
 import com.hotel.reservation.service.BillingService;
 import com.hotel.reservation.service.impl.BillingServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -5,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BillingServiceTest {
 
-    private final BillingService service = new BillingServiceImpl();
+    private final BillingService service =
+            new BillingServiceImpl(new FakeBillRepository());
 
     @Test
     void shouldCalculateTotalWithTaxCorrectly() {
