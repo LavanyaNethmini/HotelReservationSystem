@@ -10,7 +10,8 @@ public class AdminHelpStrategy implements HelpStrategy {
                         // Login
                         "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
                         "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
-                        "🔐 Login & Security <span>+</span>" +
+                        "<i class='fa-solid fa-lock text-indigo-500 mr-3'></i>" +
+                        "Login & Security <span>+</span>" +
                         "</button>" +
                         "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
                         "<ul class='list-disc ml-6 space-y-2'>" +
@@ -24,7 +25,8 @@ public class AdminHelpStrategy implements HelpStrategy {
                         // Reservations
                         "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
                         "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
-                        "📅 Reservations <span>+</span>" +
+                        "<i class='fa-solid fa-calendar-days text-indigo-500 mr-3'></i>" +
+                        "Reservations <span>+</span>" +
                         "</button>" +
                         "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
                         "<ul class='list-disc ml-6 space-y-2'>" +
@@ -39,7 +41,8 @@ public class AdminHelpStrategy implements HelpStrategy {
                         // Billing
                         "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
                         "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
-                        "💳 Billing <span>+</span>" +
+                        "<i class='fa-solid fa-credit-card text-indigo-500 mr-3'></i>" +
+                        "Billing <span>+</span>" +
                         "</button>" +
                         "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
                         "<ul class='list-disc ml-6 space-y-2'>" +
@@ -54,7 +57,8 @@ public class AdminHelpStrategy implements HelpStrategy {
                         // Reports
                         "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
                         "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
-                        "📊 Search & Reports <span>+</span>" +
+                        "<i class='fa-solid fa-chart-column text-indigo-500 mr-3'></i>" +
+                        "Search & Reports <span>+</span>" +
                         "</button>" +
                         "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
                         "<ul class='list-disc ml-6 space-y-2'>" +
