@@ -77,8 +77,7 @@ public class ReservationServlet extends HttpServlet {
         }
 
         req.setAttribute("reservations", list);
-        req.getRequestDispatcher("reservation-list.jsp")
-                .forward(req, resp);
+
 
         /* ===== BREADCRUMB ===== */
         req.setAttribute("breadcrumbs",

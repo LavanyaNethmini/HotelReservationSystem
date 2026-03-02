@@ -1,6 +1,7 @@
 package com.hotel.reservation.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class Bill {
 
@@ -9,6 +10,7 @@ public class Bill {
     private BigDecimal roomRate;
     private BigDecimal totalAmount;
     private String paymentMethod;
+    private LocalDateTime billDate;
     private int createdBy;
 
     private Bill(Builder builder) {
@@ -17,6 +19,7 @@ public class Bill {
         this.roomRate = builder.roomRate;
         this.totalAmount = builder.totalAmount;
         this.paymentMethod = builder.paymentMethod;
+        this.billDate = builder.billDate;
         this.createdBy = builder.createdBy;
     }
 
@@ -25,6 +28,7 @@ public class Bill {
     public BigDecimal getRoomRate() { return roomRate; }
     public BigDecimal getTotalAmount() { return totalAmount; }
     public String getPaymentMethod() { return paymentMethod; }
+    public LocalDateTime getBillDate() {return billDate; }
     public int getCreatedBy() { return createdBy; }
 
     public static class Builder {
@@ -34,6 +38,7 @@ public class Bill {
         private BigDecimal roomRate;
         private BigDecimal totalAmount;
         private String paymentMethod;
+        private LocalDateTime billDate;
         private int createdBy;
 
         public Builder reservationId(int reservationId) {
@@ -55,6 +60,12 @@ public class Bill {
             this.paymentMethod = paymentMethod;
             return this;
         }
+
+        public Builder billDate(LocalDateTime billDate) {
+            this.billDate = billDate;
+            return this;
+        }
+
 
         public Builder createdBy(int createdBy) {
             this.createdBy = createdBy;

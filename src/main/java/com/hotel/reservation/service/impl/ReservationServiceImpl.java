@@ -70,7 +70,10 @@ public class ReservationServiceImpl implements ReservationService, EventPublishe
         // ===== SAVE & NOTIFY =====
         int reservationId = reservationRepo.save(finalReservation);
 
-        notifyObservers("RESERVATION_CREATED", finalReservation);
+        notifyObservers(
+                "RESERVATION_CREATED",
+                finalReservation
+        );
 
         return reservationId;
     }
@@ -125,14 +128,17 @@ public class ReservationServiceImpl implements ReservationService, EventPublishe
     }
 
     @Override
-    public void notifyObservers(String eventType, Object data) {
+    public void notifyObservers(
+            String eventType,
+            Reservation reservation) {
+
         for (EventObserver observer : observers) {
-            observer.update(eventType, data);
+            observer.update(eventType, reservation);
         }
     }
 
 
-    }
+}
 
 
 

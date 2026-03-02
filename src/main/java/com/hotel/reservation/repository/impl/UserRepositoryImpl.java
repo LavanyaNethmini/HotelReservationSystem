@@ -177,8 +177,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         String sql = "SELECT * FROM users WHERE user_id=?";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
