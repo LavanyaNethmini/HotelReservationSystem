@@ -5,12 +5,15 @@ public class AdminHelpStrategy implements HelpStrategy {
     @Override
     public String getHelpContent() {
         return
-                "<div class='accordion'>" +
+                "<div class='space-y-6'>" +
 
-                        "<div class='accordion-item'>" +
-                        "<button class='accordion-header'>🔐 Login & Security</button>" +
-                        "<div class='accordion-body'>" +
-                        "<ul>" +
+                        // Login
+                        "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
+                        "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
+                        "🔐 Login & Security <span>+</span>" +
+                        "</button>" +
+                        "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
+                        "<ul class='list-disc ml-6 space-y-2'>" +
                         "<li>Login using your staff username and password</li>" +
                         "<li>Never share your credentials</li>" +
                         "<li>Always logout after finishing work</li>" +
@@ -18,10 +21,13 @@ public class AdminHelpStrategy implements HelpStrategy {
                         "</div>" +
                         "</div>" +
 
-                        "<div class='accordion-item'>" +
-                        "<button class='accordion-header'>📅 Reservations</button>" +
-                        "<div class='accordion-body'>" +
-                        "<ul>" +
+                        // Reservations
+                        "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
+                        "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
+                        "📅 Reservations <span>+</span>" +
+                        "</button>" +
+                        "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
+                        "<ul class='list-disc ml-6 space-y-2'>" +
                         "<li>Create new reservations for guests</li>" +
                         "<li>Enter guest details accurately</li>" +
                         "<li>Check room availability before confirmation</li>" +
@@ -30,10 +36,13 @@ public class AdminHelpStrategy implements HelpStrategy {
                         "</div>" +
                         "</div>" +
 
-                        "<div class='accordion-item'>" +
-                        "<button class='accordion-header'>💳 Billing</button>" +
-                        "<div class='accordion-body'>" +
-                        "<ul>" +
+                        // Billing
+                        "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
+                        "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
+                        "💳 Billing <span>+</span>" +
+                        "</button>" +
+                        "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
+                        "<ul class='list-disc ml-6 space-y-2'>" +
                         "<li>Generate bill after reservation confirmation</li>" +
                         "<li>Billing is calculated by number of nights</li>" +
                         "<li>Accept cash or card payments</li>" +
@@ -42,10 +51,13 @@ public class AdminHelpStrategy implements HelpStrategy {
                         "</div>" +
                         "</div>" +
 
-                        "<div class='accordion-item'>" +
-                        "<button class='accordion-header'>🔍 Search & Reports</button>" +
-                        "<div class='accordion-body'>" +
-                        "<ul>" +
+                        // Reports
+                        "<div class='bg-gray-50 rounded-2xl shadow-sm'>" +
+                        "<button class='accordion-header w-full text-left px-6 py-4 font-semibold text-indigo-600 flex justify-between items-center'>" +
+                        "📊 Search & Reports <span>+</span>" +
+                        "</button>" +
+                        "<div class='accordion-body hidden px-6 pb-6 text-gray-600'>" +
+                        "<ul class='list-disc ml-6 space-y-2'>" +
                         "<li>Search reservations by guest name or phone</li>" +
                         "<li>Filter reservations by month</li>" +
                         "<li>View reservation history</li>" +
@@ -55,5 +67,4 @@ public class AdminHelpStrategy implements HelpStrategy {
 
                         "</div>";
     }
-
 }
