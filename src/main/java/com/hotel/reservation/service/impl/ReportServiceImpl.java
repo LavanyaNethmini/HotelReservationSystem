@@ -1,5 +1,6 @@
 package com.hotel.reservation.service.impl;
 
+import com.hotel.reservation.domain.model.Bill;
 import com.hotel.reservation.dto.RevenueReportDTO;
 import com.hotel.reservation.dto.ReservationReportDTO;
 import com.hotel.reservation.dto.RoomOccupancyDTO;
@@ -103,6 +104,16 @@ public class ReportServiceImpl implements ReportService {
         return reportRepository.getOverallOccupancyRate(start, end);
     }
 
+    @Override
+    public int getReservationCount(LocalDate start, LocalDate end) {
+        return reportRepository.getReservationCount(start, end);
+    }
+
+    @Override
+    public List<Bill> getBillsByDateRange(LocalDate start, LocalDate end) {
+        return reportRepository.getBillsByDateRange(start, end);
+    }
+
 
     /* =========================
        COMMON VALIDATION METHOD
@@ -120,6 +131,8 @@ public class ReportServiceImpl implements ReportService {
             );
         }
     }
+
+
 
 
 }

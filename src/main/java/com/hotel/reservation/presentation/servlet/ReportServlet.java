@@ -1,5 +1,6 @@
 package com.hotel.reservation.presentation.servlet;
 
+import com.hotel.reservation.domain.model.Bill;
 import com.hotel.reservation.report.OccupancyReportStrategy;
 import com.hotel.reservation.report.ReportStrategy;
 import com.hotel.reservation.report.ReservationReportStrategy;
@@ -14,7 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @WebServlet("/reports")
 public class ReportServlet extends HttpServlet {
@@ -56,49 +59,51 @@ public class ReportServlet extends HttpServlet {
 
     private void handleRevenue(HttpServletRequest req) {
 
-        String yearStr = req.getParameter("year");
-        String startStr = req.getParameter("start");
-        String endStr = req.getParameter("end");
+        String start = req.getParameter("start");
+        String end = req.getParameter("end");
 
-        // ===== Monthly Revenue by Year =====
-        if (yearStr != null && !yearStr.isEmpty()) {
+        if (start != null && end != null
+                && !start.isEmpty()
+                && !end.isEmpty()) {
 
-            int year = Integer.parseInt(yearStr);
+            LocalDate startDate = LocalDate.parse(start);
+            LocalDate endDate = LocalDate.parse(end);
 
-            req.setAttribute("monthlyRevenue",
-                    reportService.getMonthlyRevenue(year));
+            List<Bill> bills =
+                    reportService.getBillsByDateRange(startDate, endDate);
 
-            req.setAttribute("selectedYear", year);
-        }
+            req.setAttribute("billList", bills);
 
-        // ===== Total Revenue by Date Range =====
-        if (startStr != null && endStr != null
-                && !startStr.isEmpty()
-                && !endStr.isEmpty()) {
+            // Calculate total manually (simple way)
+            BigDecimal total = BigDecimal.ZERO;
+            for (Bill b : bills) {
+                total = total.add(b.getTotalAmount());
+            }
 
-            req.setAttribute("totalRevenue",
-                    reportService.getTotalRevenue(
-                            LocalDate.parse(startStr),
-                            LocalDate.parse(endStr)
-                    ));
-
-            req.setAttribute("startDate", startStr);
-            req.setAttribute("endDate", endStr);
+            req.setAttribute("totalRevenue", total);
         }
     }
 
 
-
     private void handleReservation(HttpServletRequest req) {
+
         String start = req.getParameter("start");
         String end = req.getParameter("end");
 
-        if (start != null && end != null) {
+        if (start != null && end != null
+                && !start.isEmpty()
+                && !end.isEmpty()) {
+
+            LocalDate startDate = LocalDate.parse(start);
+            LocalDate endDate = LocalDate.parse(end);
+
+            // 1️⃣ Set reservation list
             req.setAttribute("reservationReport",
-                    reportService.getReservationReport(
-                            LocalDate.parse(start),
-                            LocalDate.parse(end)
-                    ));
+                    reportService.getReservationReport(startDate, endDate));
+
+            // 2️⃣ Set total reservation count
+            req.setAttribute("totalReservations",
+                    reportService.getReservationCount(startDate, endDate));
         }
     }
 

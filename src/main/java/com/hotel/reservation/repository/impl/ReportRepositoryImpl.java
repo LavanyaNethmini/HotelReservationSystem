@@ -1,5 +1,6 @@
 package com.hotel.reservation.repository.impl;
 
+import com.hotel.reservation.domain.model.Bill;
 import com.hotel.reservation.dto.RevenueReportDTO;
 import com.hotel.reservation.dto.ReservationReportDTO;
 import com.hotel.reservation.dto.RoomOccupancyDTO;
@@ -51,6 +52,8 @@ public class ReportRepositoryImpl implements ReportRepository {
         }
     }
 
+
+
     @Override
     public List<RevenueReportDTO> getMonthlyRevenue(int year) {
 
@@ -66,8 +69,7 @@ public class ReportRepositoryImpl implements ReportRepository {
                         "GROUP BY MONTH(r.check_in) " +
                         "ORDER BY month";
 
-        try (Connection con = DBConnection.getInstance().getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, year);
 
@@ -223,6 +225,69 @@ public class ReportRepositoryImpl implements ReportRepository {
         return list;
     }
 
+
+    @Override
+    public int getReservationCount(LocalDate start, LocalDate end) {
+
+        String sql =
+                "SELECT COUNT(*) " +
+                        "FROM reservations " +
+                        "WHERE check_in BETWEEN ? AND ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setDate(1, java.sql.Date.valueOf(start));
+            ps.setDate(2, java.sql.Date.valueOf(end));
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public List<Bill> getBillsByDateRange(LocalDate start, LocalDate end) {
+
+        List<Bill> list = new ArrayList<>();
+
+        String sql =
+                "SELECT reservation_id, nights, room_rate, total_amount, payment_method, bill_date, created_by " +
+                        "FROM bills " +
+                        "WHERE bill_date BETWEEN ? AND ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setDate(1, java.sql.Date.valueOf(start));
+            ps.setDate(2, java.sql.Date.valueOf(end));
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Bill bill = new Bill.Builder()
+                        .reservationId(rs.getInt("reservation_id"))
+                        .nights(rs.getInt("nights"))
+                        .roomRate(rs.getBigDecimal("room_rate"))
+                        .paymentMethod(rs.getString("payment_method"))
+                        .createdBy(rs.getInt("created_by"))
+                        .build();
+
+                list.add(bill);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
 
 }

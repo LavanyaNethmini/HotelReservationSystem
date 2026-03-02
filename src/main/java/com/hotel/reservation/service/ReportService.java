@@ -1,5 +1,6 @@
 package com.hotel.reservation.service;
 
+import com.hotel.reservation.domain.model.Bill;
 import com.hotel.reservation.dto.RevenueReportDTO;
 import com.hotel.reservation.dto.ReservationReportDTO;
 import com.hotel.reservation.dto.RoomOccupancyDTO;
@@ -54,5 +55,12 @@ public interface ReportService {
             LocalDate start,
             LocalDate end
     );
+
+
+    int getReservationCount(LocalDate start, LocalDate end);
+
+
+
+    List<Bill> getBillsByDateRange(LocalDate start, LocalDate end);
 
 }
