@@ -1,0 +1,69 @@
+package com.hotel.reservation.service.impl;
+
+import com.hotel.reservation.domain.model.Room;
+import com.hotel.reservation.dto.RoomAvailabilityDTO;
+import com.hotel.reservation.repository.RoomRepository;
+import com.hotel.reservation.repository.impl.RoomRepositoryImpl;
+import com.hotel.reservation.service.RoomService;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RoomServiceImpl implements RoomService {
+
+    private final RoomRepository roomRepository;
+
+
+    // Production constructor (used by system)
+    public RoomServiceImpl() {
+        this(new RoomRepositoryImpl());
+    }
+
+    // Test constructor (used in unit tests)
+    public RoomServiceImpl(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
+
+    @Override
+    public List<RoomAvailabilityDTO> getRoomsWithAvailability(
+            LocalDate checkIn, LocalDate checkOut) {
+
+        if (checkIn == null || checkOut == null) {
+            throw new IllegalArgumentException("Date range required");
+        }
+
+        if (checkOut.isBefore(checkIn)) {
+            throw new IllegalArgumentException("Check-out cannot be before check-in");
+        }
+
+        List<Room> rooms = roomRepository.findAll();
+        List<Integer> bookedRoomIds =
+                roomRepository.findBookedRoomIds(checkIn, checkOut);
+
+        List<RoomAvailabilityDTO> result = new ArrayList<>();
+
+        for (Room r : rooms) {
+            boolean available = !bookedRoomIds.contains(r.getRoomId());
+
+            result.add(
+                    new RoomAvailabilityDTO(
+                            r.getRoomId(),
+                            r.getRoomNumber(),
+                            r.getRoomType(),
+                            r.getPrice(),
+                            available
+                    )
+            );
+
+        }
+
+        return result;
+    }
+
+    @Override
+    public void saveRoom(String number, String type, double price) {
+        roomRepository.save(number, type, price);
+    }
+
+}
