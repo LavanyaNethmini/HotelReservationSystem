@@ -1,54 +1,95 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ASUS
-  Date: 2/12/2026
-  Time: 7:59 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Add Room</title>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/assets/css/style.css">
+    <title>Add Room | Hotel Reservation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans">
 
-<div class="dashboard-container">
-    <div class="dashboard-card">
+<div class="flex h-screen">
 
-        <h2>Add New Room</h2>
+    <jsp:include page="includes/sidebar.jsp" />
 
-        <form method="post"
-              action="${pageContext.request.contextPath}/room-add">
+        <!-- ===== PAGE CONTENT ===== -->
+        <main class="flex-1 overflow-y-auto p-10">
 
-            <div class="input-group">
-                <label>Room Number</label>
-                <input type="text" name="roomNumber" required>
+            <div class="max-w-2xl mx-auto bg-white shadow-xl rounded-3xl p-10">
+
+                <h1 class="text-2xl font-bold text-gray-800 mb-8">
+                    Create a New Room
+                </h1>
+
+                <form method="post"
+                      action="${pageContext.request.contextPath}/room-add"
+                      class="space-y-6">
+
+                    <!-- Room Number -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Room Number
+                        </label>
+                        <input type="text"
+                               name="roomNumber"
+                               required
+                               class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Room Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Room Type
+                        </label>
+                        <select name="roomType"
+                                required
+                                class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+
+                            <option value="SINGLE">Single</option>
+                            <option value="DOUBLE">Double</option>
+                            <option value="SUITE">Suite</option>
+
+                        </select>
+                    </div>
+
+                    <!-- Price -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">
+                            Price per Night (LKR)
+                        </label>
+                        <input type="number"
+                               step="0.01"
+                               name="price_per_night"
+                               required
+                               class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="pt-4 flex gap-4">
+
+                        <button type="submit"
+                                class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg">
+                            Save Room
+                        </button>
+
+                        <a href="rooms"
+                           class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-300 transition">
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
             </div>
 
-            <div class="input-group">
-                <label>Room Type</label>
-                <select name="roomType" required>
-                    <option value="SINGLE">SINGLE</option>
-                    <option value="DOUBLE">DOUBLE</option>
-                    <option value="SUITE">SUITE</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Price</label>
-                <input type="number" step="0.01" name="price_per_night" required>
-            </div>
-
-            <button class="btn">Save Room</button>
-
-        </form>
+        </main>
 
     </div>
+
 </div>
 
 </body>
