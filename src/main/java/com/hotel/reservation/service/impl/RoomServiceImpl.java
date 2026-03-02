@@ -29,6 +29,14 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomAvailabilityDTO> getRoomsWithAvailability(
             LocalDate checkIn, LocalDate checkOut) {
 
+        if (checkIn == null || checkOut == null) {
+            throw new IllegalArgumentException("Date range required");
+        }
+
+        if (checkOut.isBefore(checkIn)) {
+            throw new IllegalArgumentException("Check-out cannot be before check-in");
+        }
+
         List<Room> rooms = roomRepository.findAll();
         List<Integer> bookedRoomIds =
                 roomRepository.findBookedRoomIds(checkIn, checkOut);
@@ -47,6 +55,7 @@ public class RoomServiceImpl implements RoomService {
                             available
                     )
             );
+
         }
 
         return result;

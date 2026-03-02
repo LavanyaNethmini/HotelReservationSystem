@@ -57,4 +57,18 @@ class RoomServiceTest {
 
         assertFalse(result.get(0).isAvailable());
     }
+
+    @Test
+    void shouldThrowExceptionWhenDateRangeInvalid() {
+
+        FakeRoomRepository fakeRepo = new FakeRoomRepository();
+        RoomService service = new RoomServiceImpl(fakeRepo);
+
+        assertThrows(IllegalArgumentException.class, () ->
+                service.getRoomsWithAvailability(
+                        LocalDate.now(),
+                        LocalDate.now().minusDays(1)
+                )
+        );
+    }
 }
