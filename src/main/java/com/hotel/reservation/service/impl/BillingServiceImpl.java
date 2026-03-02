@@ -7,8 +7,17 @@ import com.hotel.reservation.service.BillingService;
 
 public class BillingServiceImpl implements BillingService {
 
-    private final BillRepository billRepository =
-            new BillRepositoryImpl();
+    private final BillRepository billRepository;
+
+    // Production constructor
+    public BillingServiceImpl() {
+        this(new BillRepositoryImpl());
+    }
+
+    // Test constructor
+    public BillingServiceImpl(BillRepository billRepository) {
+        this.billRepository = billRepository;
+    }
 
     @Override
     public void generateBill(Bill bill) {
