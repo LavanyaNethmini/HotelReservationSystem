@@ -12,8 +12,18 @@ import java.util.List;
 
 public class RoomServiceImpl implements RoomService {
 
-    private final RoomRepository roomRepository =
-            new RoomRepositoryImpl();
+    private final RoomRepository roomRepository;
+
+
+    // Production constructor (used by system)
+    public RoomServiceImpl() {
+        this(new RoomRepositoryImpl());
+    }
+
+    // Test constructor (used in unit tests)
+    public RoomServiceImpl(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     @Override
     public List<RoomAvailabilityDTO> getRoomsWithAvailability(

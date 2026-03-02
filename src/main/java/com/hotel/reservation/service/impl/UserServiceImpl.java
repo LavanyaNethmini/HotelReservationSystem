@@ -9,6 +9,12 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
+    // Test constructor (Dependency Injection)
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+
     private final UserRepository userRepository;
 
     public UserServiceImpl() {

@@ -10,17 +10,35 @@ import com.hotel.reservation.repository.impl.NotificationRepositoryImpl;
 
 public class EmailNotificationObserver implements EventObserver {
 
-    private final NotificationRepository notificationRepo =
-            new NotificationRepositoryImpl();
+    private final NotificationRepository notificationRepo;
+    private final GuestRepository guestRepo;
+    private final EmailSender emailSender;
+
+    // Production constructor
+    public EmailNotificationObserver() {
+        this(
+                new NotificationRepositoryImpl(),
+                new GuestRepositoryImpl(),
+                new EmailSender()
+        );
+    }
+
+    // Test constructor
+    public EmailNotificationObserver(
+            NotificationRepository notificationRepo,
+            GuestRepository guestRepo,
+            EmailSender emailSender) {
+
+        this.notificationRepo = notificationRepo;
+        this.guestRepo = guestRepo;
+        this.emailSender = emailSender;
+    }
 
     @Override
     public void update(String eventType,
                        Reservation reservation) {
 
-        GuestRepository guestRepo = new GuestRepositoryImpl();
         Guest guest = guestRepo.findById(reservation.getGuestId());
-
-        EmailSender emailSender = new EmailSender();
 
         switch (eventType) {
 
@@ -35,9 +53,8 @@ public class EmailNotificationObserver implements EventObserver {
                         message
                 );
 
-                // ✅ Save logged user ID
                 notificationRepo.save(
-                        reservation.getCreatedBy(),                     // ✅ logged user
+                        reservation.getCreatedBy(),
                         "EMAIL",
                         "RESERVATION_CREATED",
                         message,
@@ -58,7 +75,7 @@ public class EmailNotificationObserver implements EventObserver {
                 );
 
                 notificationRepo.save(
-                        reservation.getCreatedBy(),                     // ✅ logged user
+                        reservation.getCreatedBy(),
                         "EMAIL",
                         "RESERVATION_CANCELLED",
                         cancelMessage,

@@ -14,4 +14,11 @@ public class BillingServiceImpl implements BillingService {
     public void generateBill(Bill bill) {
         billRepository.save(bill);
     }
+
+    @Override
+    public double calculateTotal(double pricePerNight, int nights, double taxPercentage) {
+        double subtotal = pricePerNight * nights;
+        double tax = subtotal * taxPercentage / 100;
+        return subtotal + tax;
+    }
 }

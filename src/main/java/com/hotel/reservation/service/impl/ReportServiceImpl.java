@@ -14,8 +14,17 @@ import java.util.List;
 
 public class ReportServiceImpl implements ReportService {
 
-    private final ReportRepository reportRepository =
-            new ReportRepositoryImpl();
+    private final ReportRepository reportRepository;
+
+    public ReportServiceImpl() {
+        this.reportRepository = new ReportRepositoryImpl();
+    }
+
+    public ReportServiceImpl(ReportRepository reportRepository) {
+        this.reportRepository = reportRepository;
+    }
+
+
 
     /* =========================
        REVENUE REPORT
