@@ -2,10 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Make Reservation</title>
+    <title>Make Reservation | Hotel</title>
 
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/assets/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
         function checkPhone() {
@@ -25,99 +24,104 @@
     </script>
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans">
 
-<!-- ===== NAVBAR ===== -->
-<div class="navbar">
-    <div class="logo">Hotel Reservation System</div>
-    <div class="nav-right">
-        <div class="username">
-            <%= session.getAttribute("username") %>
-        </div>
-        <form action="logout" method="post">
-            <button type="submit">Logout</button>
-        </form>
+<div class="flex h-screen">
+
+    <jsp:include page="includes/sidebar.jsp" />
+
+        <!-- ===== PAGE CONTENT ===== -->
+        <main class="flex-1 overflow-y-auto p-10">
+
+            <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-3xl p-10">
+
+                <h2 class="text-2xl font-bold text-gray-800 mb-8">
+                    Make Reservation & Billing
+                </h2>
+
+                <% if (request.getAttribute("error") != null) { %>
+                <div class="bg-red-100 text-red-600 p-4 rounded-lg mb-6">
+                    <%= request.getAttribute("error") %>
+                </div>
+                <% } %>
+
+                <form method="post" action="reservation" class="space-y-10">
+
+                    <!-- Guest Details -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-indigo-600 mb-4">
+                            Guest Details
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <input type="text" id="phone" name="phone"
+                                   placeholder="Phone"
+                                   onkeyup="checkPhone()" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+
+
+                            <input type="text" id="name" name="name"
+                                   placeholder="Name" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+
+                            <input type="text" id="address" name="address"
+                                   placeholder="Address" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+
+                            <input type="email" id="email" name="email"
+                                   placeholder="Email" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <!-- Reservation -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-indigo-600 mb-4">
+                            Reservation Details
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                            <input type="number" name="roomId"
+                                   placeholder="Room ID" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+
+                            <input type="date" name="checkIn" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+
+                            <input type="date" name="checkOut" required
+                                   class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <!-- Billing -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-indigo-600 mb-4">
+                            Billing Details
+                        </h3>
+
+                        <select name="paymentMethod" required
+                                class="w-full max-w-sm px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Select Payment</option>
+                            <option value="CASH">Cash</option>
+                            <option value="CARD">Card</option>
+                        </select>
+                    </div>
+
+                    <button type="submit"
+                            class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition shadow-lg">
+                        Confirm Reservation & Generate Bill
+                    </button>
+
+                </form>
+
+            </div>
+
+        </main>
+
     </div>
-</div>
 
-<!-- ===== MAIN CONTENT ===== -->
-<div class="dashboard-container">
-    <div class="dashboard-card">
-
-        <h2>Make Reservation & Billing</h2>
-
-        <!-- ERROR MESSAGE -->
-        <% if (request.getAttribute("error") != null) { %>
-        <div class="error">
-            <%= request.getAttribute("error") %>
-        </div>
-        <% } %>
-
-        <form method="post" action="reservation">
-
-            <!-- ===== GUEST DETAILS ===== -->
-            <h3>Guest Details</h3>
-
-            <div class="input-group">
-                <label>Phone (unique)</label>
-                <input type="text" id="phone" name="phone"
-                       placeholder="Enter phone number"
-                       onkeyup="checkPhone()" required>
-            </div>
-
-            <div class="input-group">
-                <label>Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-
-            <div class="input-group">
-                <label>Address</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <!-- ===== RESERVATION DETAILS ===== -->
-            <h3>Reservation Details</h3>
-
-            <div class="input-group">
-                <label>Room ID</label>
-                <input type="number" name="roomId" required>
-            </div>
-
-            <div class="input-group">
-                <label>Check In</label>
-                <input type="date" name="checkIn" required>
-            </div>
-
-            <div class="input-group">
-                <label>Check Out</label>
-                <input type="date" name="checkOut" required>
-            </div>
-
-            <!-- ===== BILLING DETAILS ===== -->
-            <h3>Billing Details</h3>
-
-            <div class="input-group">
-                <label>Payment Method</label>
-                <select name="paymentMethod" required>
-                    <option value="">Select Payment</option>
-                    <option value="CASH">Cash</option>
-                    <option value="CARD">Card</option>
-                </select>
-            </div>
-
-            <br>
-            <button class="btn" type="submit">
-                Confirm Reservation & Generate Bill
-            </button>
-
-        </form>
-
-    </div>
 </div>
 
 </body>
