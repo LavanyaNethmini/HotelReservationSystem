@@ -8,6 +8,7 @@
 <%@ page import="com.hotel.reservation.service.DashboardService" %>
 <%@ page import="com.hotel.reservation.service.impl.DashboardServiceImpl" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%
     int totalReservations = 0;
@@ -41,88 +42,7 @@
 <!-- ===== MAIN LAYOUT ===== -->
 <div class="flex h-screen">
 
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="w-64 bg-indigo-500 text-white shadow-lg">
-
-        <div class="p-6 text-xl font-bold border-b border-indigo-500">
-            Hotel Reservation
-        </div>
-
-        <nav class="flex-1 p-4 space-y-2">
-
-            <a href="${pageContext.request.contextPath}/reservation.jsp"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Make Reservation
-            </a>
-
-            <a href="${pageContext.request.contextPath}/reservation"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Reservation List
-            </a>
-
-            <a href="${pageContext.request.contextPath}/guests"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Guests
-            </a>
-
-            <a href="${pageContext.request.contextPath}/rooms"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Rooms
-            </a>
-
-            <a href="${pageContext.request.contextPath}/help"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Help Guide
-            </a>
-
-            <% if ("ADMIN".equals(session.getAttribute("role"))) { %>
-
-            <a href="${pageContext.request.contextPath}/users"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                User Management
-            </a>
-
-            <a href="${pageContext.request.contextPath}/reports"
-               class="block px-4 py-3 rounded-lg hover:bg-indigo-600 transition">
-                Reports
-            </a>
-
-            <div class="px-4 py-3 rounded-lg bg-indigo-600">
-                System Settings
-            </div>
-
-            <% } %>
-
-        </nav>
-
-    </aside>
-
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="flex-1 flex flex-col bg-white">
-
-        <!-- ===== TOP NAVBAR ===== -->
-        <header class="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
-
-            <h2 class="text-xl font-semibold text-gray-700">
-                Dashboard
-            </h2>
-
-            <div class="flex items-center gap-4">
-
-                <span class="text-gray-600">
-                    Welcome,
-                    <b><%= session.getAttribute("username") %></b>
-                    (<%= session.getAttribute("role") %>)
-                </span>
-
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                        Logout
-                    </button>
-                </form>
-
-            </div>
-        </header>
+    <jsp:include page="includes/sidebar.jsp" />
 
         <main class="p-10 max-w-7xl mx-auto">
 
@@ -132,7 +52,7 @@
                     Welcome back, <%= session.getAttribute("username") %>
                 </h1>
                 <p class="text-gray-500 mt-3 text-lg">
-                    Here’s what’s happening in your hotel today.
+                    Here's what's happening in your hotel today.
                 </p>
             </div>
             <!-- Statistics -->
@@ -214,9 +134,173 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 mb-12">
+
+                <h3 class="text-xl font-bold text-gray-800 mb-8">
+                    Quick Actions
+                </h3>
+
+
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+                    <!-- New Reservation -->
+                    <a href="${pageContext.request.contextPath}/reservation.jsp"
+                       class="group bg-indigo-50 hover:bg-indigo-100 p-6 rounded-2xl transition shadow-sm">
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-indigo-500 text-white p-3 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 4.5v15m7.5-7.5h-15"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-700">
+                                    New Reservation
+                                </p>
+                            </div>
+                        </div>
+
+                    </a>
+
+                    <!-- Manage Guests -->
+                    <a href="${pageContext.request.contextPath}/guests"
+                       class="group bg-green-50 hover:bg-green-100 p-6 rounded-2xl transition shadow-sm">
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-500 text-white p-3 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M15.75 6.75a3.75 3.75 0 11-7.5 0
+                                 3.75 3.75 0 017.5 0zM4.5
+                                 20.25a8.25 8.25 0
+                                 0115 0"/>
+                                </svg>
+                            </div>
+                            <p class="font-semibold text-gray-700">
+                                Manage Guests
+                            </p>
+                        </div>
+
+                    </a>
+
+                    <!-- Manage Rooms -->
+                    <a href="${pageContext.request.contextPath}/rooms"
+                       class="group bg-orange-50 hover:bg-orange-100 p-6 rounded-2xl transition shadow-sm">
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-orange-500 text-white p-3 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M3 21h18M4.5 21V7.5A1.5
+                                 1.5 0 016 6h12a1.5 1.5
+                                 0 011.5 1.5V21"/>
+                                </svg>
+                            </div>
+                            <p class="font-semibold text-gray-700">
+                                Manage Rooms
+                            </p>
+                        </div>
+
+                    </a>
+
+                    <!-- Help-->
+                    <a href="${pageContext.request.contextPath}/help"
+                       class="group bg-purple-50 hover:bg-purple-100 p-6 rounded-2xl transition shadow-sm">
+
+                        <div class="flex items-center gap-4">
+                            <div class="bg-purple-500 text-white p-3 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 18h.01M9.09 9a3 3 0 115.82 1c0 2-3 2-3 4m0 4h.01"/>
+                                </svg>
+                            </div>
+                            <p class="font-semibold text-gray-700">
+                                Help
+                            </p>
+                        </div>
+
+                    </a>
+
+
+
+                </div>
 
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+
+                <!-- System Info -->
+                <div class="bg-white rounded-3xl shadow-xl p-8">
+                    <h3 class="text-lg font-bold text-gray-800 mb-6">
+                        System Information
+                    </h3>
+
+                    <ul class="space-y-4 text-gray-600">
+
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 text-indigo-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M6.75 3v2.25M17.25 3v2.25M3
+                             8.25h18"/>
+                            </svg>
+                            Today: <%= java.time.LocalDate.now() %>
+                        </li>
+
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 text-green-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M15.75 6.75a3.75 3.75 0
+                             11-7.5 0 3.75 3.75 0
+                             017.5 0z"/>
+                            </svg>
+                            Logged in as: <%= session.getAttribute("role") %>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Tips -->
+                <div class="bg-white rounded-3xl shadow-xl p-8">
+                    <h3 class="text-lg font-bold text-gray-800 mb-6">
+                        Quick Tips
+                    </h3>
+
+                    <ul class="space-y-3 text-gray-600 text-sm">
+                        <li>Monitor daily reservations for occupancy trends.</li>
+                        <li>Review reports weekly for revenue growth.</li>
+                        <li>Keep user roles properly assigned.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <footer class="mt-16 border-t pt-6 text-center text-gray-400 text-sm">
+                © <%= java.time.Year.now() %> Hotel Reservation System |
+                Version 1.0 |
+                All Rights Reserved
+            </footer>
 
         </main>
 
@@ -224,7 +308,7 @@
 
     </div>
 
-</div>
+
 
 <script>
     feather.replace()
