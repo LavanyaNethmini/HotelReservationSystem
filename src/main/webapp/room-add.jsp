@@ -24,6 +24,19 @@
                     Create a New Room
                 </h1>
 
+                <%
+                    String error = (String) request.getAttribute("error");
+                    if(error != null){
+                %>
+
+                <div style="color:red; font-weight:bold;">
+                    <%= error %>
+                </div>
+
+                <%
+                    }
+                %>
+
                 <form method="post"
                       action="${pageContext.request.contextPath}/room-add"
                       class="space-y-6">

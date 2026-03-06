@@ -24,5 +24,7 @@ public interface UserRepository {
 
     void resetPassword(int userId, String newPassword);
 
+    boolean usernameExists(String username);
+
 
 }

@@ -71,6 +71,8 @@
 
                             <input type="email" id="email" name="email"
                                    placeholder="Email" required
+                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                   title="Please enter a valid email address"
                                    class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500">
                         </div>
                     </div>
