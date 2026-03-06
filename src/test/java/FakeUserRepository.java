@@ -1,6 +1,9 @@
 import com.hotel.reservation.domain.model.User;
 import com.hotel.reservation.repository.UserRepository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,5 +68,15 @@ class FakeUserRepository implements UserRepository {
     @Override
     public void resetPassword(int userId, String newPassword) {
 
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+
+        if (storedUser != null && storedUser.getUsername().equalsIgnoreCase(username)) {
+            return true;
+        }
+
+        return false;
     }
 }

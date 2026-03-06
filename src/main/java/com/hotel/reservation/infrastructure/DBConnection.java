@@ -15,7 +15,7 @@ public class DBConnection {
 
     private DBConnection() {
         try {
-            // 🔴 THIS LINE IS THE KEY FIX
+
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
