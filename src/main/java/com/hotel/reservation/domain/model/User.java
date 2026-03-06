@@ -25,7 +25,7 @@ public class User {
         this.isActive = builder.isActive;
     }
 
-    // Getters only (immutable object)
+    // Getters only
     public int getUserId() { return userId; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }

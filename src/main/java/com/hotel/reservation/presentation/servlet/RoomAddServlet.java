@@ -45,8 +45,21 @@ public class RoomAddServlet extends HttpServlet {
         String roomType = req.getParameter("roomType");
         double price = Double.parseDouble(req.getParameter("price_per_night"));
 
-        roomService.saveRoom(roomNumber, roomType, price);
+        try {
 
-        resp.sendRedirect(req.getContextPath() + "/rooms");
+            roomService.saveRoom(roomNumber, roomType, price);
+
+            resp.sendRedirect(req.getContextPath() + "/rooms");
+
+        } catch (Exception e) {
+
+            if (e.getMessage().contains("room_number")) {
+                req.setAttribute("error", "Room number already exists.");
+            } else {
+                req.setAttribute("error", "Error saving room.");
+            }
+
+            req.getRequestDispatcher("/room-add.jsp").forward(req, resp);
+        }
     }
 }
