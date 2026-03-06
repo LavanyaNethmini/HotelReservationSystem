@@ -105,6 +105,14 @@
 
           </div>
 
+          <% if (request.getAttribute("error") != null) { %>
+          <div class="bg-red-100 text-red-600 p-4 rounded-lg mb-6">
+            <%= request.getAttribute("error") %>
+          </div>
+          <% } %>
+
+
+
         </form>
 
       </div>

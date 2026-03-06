@@ -62,11 +62,24 @@ public class UserAddServlet extends HttpServlet {
                 .address(address)
                 .role(role)
                 .build();
+        try {
 
-        userService.save(user);
+            userService.save(user);
 
-        req.getSession().setAttribute("success", "User added successfully!");
+            req.getSession().setAttribute("success", "User added successfully!");
+            resp.sendRedirect(req.getContextPath() + "/users");
 
-        resp.sendRedirect(req.getContextPath() + "/users");
+        } catch (Exception e) {
+
+            Throwable cause = e.getCause();
+
+            if (cause != null && cause.getMessage().contains("Duplicate entry")) {
+                req.setAttribute("error", "Username already exists. Please choose another username.");
+            } else {
+                req.setAttribute("error", "Error saving user.");
+            }
+
+            req.getRequestDispatcher("user-add.jsp").forward(req, resp);
+        }
     }
-}
+    }
