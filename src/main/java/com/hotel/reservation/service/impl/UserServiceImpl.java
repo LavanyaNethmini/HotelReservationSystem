@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         // 2️⃣ Rebuild complete user with old password
         User user = new User.UserBuilder()
                 .userId(existingUser.getUserId())
-                .username(existingUser.getUsername()) // keep same
+                .username(updatedUser.getUsername()) // keep same
                 .password(existingUser.getPassword()) // KEEP PASSWORD
                 .fullName(updatedUser.getFullName())
                 .contactNo(updatedUser.getContactNo())
@@ -103,4 +103,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+    @Override
+    public boolean usernameExists(String username) {
+        return userRepository.usernameExists(username);
+    }
 }

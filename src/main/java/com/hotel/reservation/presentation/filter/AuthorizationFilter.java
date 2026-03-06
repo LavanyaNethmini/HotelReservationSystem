@@ -17,26 +17,32 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession(false);
+        String uri = req.getRequestURI();
 
-        // Not logged in
+        // Allow login page
+        if (uri.contains("login.jsp") || uri.contains("/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Check login
         if (session == null || session.getAttribute("role") == null) {
             res.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }
 
         String role = session.getAttribute("role").toString();
-        String uri = req.getRequestURI();
 
-        // ===== ADMIN ONLY =====
-        if (uri.contains("/admin") && !role.equals("ADMIN")) {
+        // ===== ADMIN ONLY FEATURES =====
+        if ((uri.contains("/user-add") ||
+                uri.contains("/user-edit") ||
+                uri.contains("/user-reset-password") ||
+                uri.contains("/generate-report") ||
+                uri.contains("/room-add")) ||
+                uri.contains("/reports")
+                && !role.equals("ADMIN")) {
+
             res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
-            return;
-        }
-
-        // ===== STAFF ONLY =====
-        if (uri.contains("/staff") && role.equals("ADMIN")) {
-            // Admin can access staff pages
-            chain.doFilter(request, response);
             return;
         }
 

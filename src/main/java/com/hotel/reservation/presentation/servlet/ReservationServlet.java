@@ -128,6 +128,13 @@ public class ReservationServlet extends HttpServlet {
             LocalDate checkOut =
                     LocalDate.parse(request.getParameter("checkOut"));
 
+            LocalDate today = LocalDate.now();
+
+            /* ===== VALIDATE PAST DATE ===== */
+            if (checkIn.isBefore(today)) {
+                throw new IllegalStateException("Check-in date cannot be in the past");
+            }
+
             long nights =
                     ChronoUnit.DAYS.between(checkIn, checkOut);
 
