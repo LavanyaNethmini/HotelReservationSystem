@@ -35,6 +35,19 @@
                     </p>
                 </div>
 
+                <%
+                    String error = (String) request.getAttribute("error");
+                    if(error != null){
+                %>
+
+                <div style="color:red; font-weight:bold;">
+                    <%= error %>
+                </div>
+
+                <%
+                    }
+                %>
+
                 <form method="post"
                       action="${pageContext.request.contextPath}/user-edit"
                       class="space-y-6">
