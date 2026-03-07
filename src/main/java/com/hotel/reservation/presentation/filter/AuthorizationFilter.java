@@ -33,15 +33,18 @@ public class AuthorizationFilter implements Filter {
 
         String role = session.getAttribute("role").toString();
 
-        // ===== ADMIN ONLY FEATURES =====
-        if ((uri.contains("/user-add") ||
-                uri.contains("/user-edit") ||
-                uri.contains("/user-reset-password") ||
-                uri.contains("/generate-report") ||
-                uri.contains("/room-add")) ||
-                uri.contains("/reports")
-                && !role.equals("ADMIN")) {
 
+
+        // Admin-only pages
+        if (
+                (uri.contains("/user-add") ||
+                        uri.contains("/user-edit") ||
+                        uri.contains("/user-reset-password") ||
+                        uri.contains("/generate-report") ||
+                        uri.contains("/room-add") ||
+                        uri.contains("/reports"))
+                        && !role.equals("ADMIN")
+        ) {
             res.sendRedirect(req.getContextPath() + "/unauthorized.jsp");
             return;
         }
