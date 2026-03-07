@@ -1,3 +1,4 @@
+import com.hotel.reservation.domain.model.Reservation;
 import com.hotel.reservation.repository.BillRepository;
 import com.hotel.reservation.service.BillingService;
 import com.hotel.reservation.service.impl.BillingServiceImpl;
@@ -26,4 +27,15 @@ class BillingServiceTest {
         double result = service.calculateTotal(1000, 2, 0);
         assertEquals(2000, result);
     }
-}
+
+    @Test
+    void calculateTotal_withDifferentValues() {
+        BillingServiceImpl service = new BillingServiceImpl(new FakeBillRepository());
+
+        double result = service.calculateTotal(3000,3,10);
+
+        assertEquals(9900,result);
+    }
+
+
+    }

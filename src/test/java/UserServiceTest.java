@@ -107,4 +107,7 @@ class UserServiceTest {
 
         assertEquals("secret123", result.getPassword());
     }
-}
+
+
+
+    }

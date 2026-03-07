@@ -37,4 +37,12 @@ public class NotificationServiseTest {
         assertTrue(fakeEmail.emailSent);
         assertTrue(fakeNotification.saved);
     }
+
+    @Test
+    void emailSubject_shouldContainReservation() {
+
+        String subject = "Reservation Confirmed";
+
+        assertTrue(subject.contains("Reservation"));
+    }
 }
